@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FunnyGuy211 4.0 – Hybrid AI</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&family=Nunito:wght@400;600;700&display=swap">
+<style>
+:root{--night:#0a1424;--glass:rgba(255,255,255,.06);--glass2:rgba(255,255,255,.11);--line:rgba(255,255,255,.13);--ink:#eaf4ff;--mute:#9db4cc;--g1:#5ef2c8;--g2:#7aa7ff;--g3:#ff7ad9;--gold:#ffd166;--pop:#122036;--fs:16px}
+:root[data-theme="ice"]{--night:#e8f2fb;--glass:rgba(255,255,255,.6);--glass2:rgba(255,255,255,.95);--line:rgba(20,60,100,.14);--ink:#12263a;--mute:#53708a;--pop:#fff}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{color:var(--ink);font-family:Nunito,"Segoe UI",Roboto,sans-serif;font-size:15px;background:radial-gradient(900px 520px at 8% -10%,rgba(94,242,200,.26),transparent 60%),radial-gradient(800px 520px at 100% 0,rgba(255,122,217,.2),transparent 60%),radial-gradient(900px 600px at 50% 125%,rgba(122,167,255,.3),transparent 60%),var(--night);display:flex;gap:14px;padding:14px;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--g1);outline-offset:2px}
+.panel{position:relative;z-index:1;background:var(--glass);border:1px solid var(--line);border-radius:26px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 24px 60px rgba(0,0,0,.25)}
+aside{width:272px;flex:none;display:flex;flex-direction:column;padding:16px 12px;transition:transform .2s}
+.logo{font-family:"Baloo 2",sans-serif;font-weight:700;font-size:26px;padding:2px 10px 14px;background:linear-gradient(90deg,var(--g1),var(--g2),var(--g3),var(--g1));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;border-radius:14px;padding:10px 12px;font-size:15px;font-weight:600;transition:background .18s}
+.nav:hover,.nav.on{background:var(--glass2)}
+.nav.new{background:linear-gradient(90deg,var(--g1),var(--g2));color:#06202a;font-weight:700;margin-bottom:8px}
+.sec{font-size:12px;font-weight:700;color:var(--mute);padding:16px 12px 4px}
+#srch{margin:6px 2px;width:calc(100% - 4px);padding:9px 12px;border:1px solid var(--line);border-radius:12px;background:var(--glass);color:var(--ink);display:none;font:inherit}
+#hist{flex:1;overflow-y:auto}
+.prof{display:flex;align-items:center;gap:10px;border-top:1px solid var(--line);padding:12px 6px 0}
+.ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--g3),var(--g2));display:grid;place-items:center;font-weight:800;color:#0a1020;flex:none;text-transform:uppercase}
+.pn{font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:130px}
+.badge{font-size:12px;color:var(--mute)}
+.badge.pro{color:var(--gold);font-weight:800}
+.pr{margin-left:auto;display:flex;gap:6px;align-items:center}
+.up{font-size:12.5px;font-weight:800;border:0;background:linear-gradient(90deg,var(--gold),#ff9f43);color:#3a2300;border-radius:999px;padding:7px 12px}
+.gear{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--glass);font-size:16px;display:grid;place-items:center;padding:0}
+main{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.top{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);position:relative}
+#bMenu{display:none;background:none;border:0;font-size:22px}
+.mdl{display:flex;align-items:center;gap:8px;background:linear-gradient(115deg,rgba(94,242,200,.18),rgba(122,167,255,.2));border:1px solid rgba(94,242,200,.42);border-radius:14px;padding:9px 14px;font-weight:800;font-size:13px}
+.mdl-icon{font-size:17px}
+.mdl-label{font-size:10px;letter-spacing:.08em;color:var(--mute)}
+.menu{position:absolute;top:58px;left:16px;z-index:5;background:var(--pop);border:1px solid var(--line);border-radius:18px;padding:6px;width:min(340px,calc(100vw - 40px));display:none;box-shadow:0 18px 44px rgba(0,0,0,.4);max-height:min(70vh,520px);overflow:auto}
+.menu.on{display:block}
+.menu::before{content:"CHỌN MODEL AI";display:block;padding:10px 12px 7px;font-size:11px;font-weight:900;letter-spacing:.1em;color:var(--mute)}
+.menu button{display:block;width:100%;text-align:left;background:none;border:1px solid transparent;border-radius:12px;padding:12px 13px}
+.menu button:hover{background:var(--glass2)}
+.menu button.on{border-color:rgba(94,242,200,.38);background:var(--glass2)}
+.menu b{font-size:14.5px}.menu small{display:block;color:var(--mute);font-size:12.5px;max-width:245px;padding-top:4px}
+.menu button .tag{float:right;margin-top:1px}
+.cred{margin-left:auto;font-size:13px;font-weight:700;border:1px solid var(--line);border-radius:999px;padding:7px 12px;background:var(--glass);white-space:nowrap}
+.tag{font-size:10.5px;font-weight:800;border-radius:6px;padding:2px 6px;margin-left:6px;background:var(--g1);color:#06202a}
+.tag.p{background:var(--gold);color:#3a2300}
+.tag.m{background:linear-gradient(90deg,#ffd166,#ff7ad9);color:#3a2300}
+.tag.d{background:linear-gradient(90deg,#ff7ad9,#7aa7ff);color:#0a1020}
+.tag.t{background:linear-gradient(90deg,#5ef2c8,#ffd166);color:#0a1020}
+.tag.ty{background:linear-gradient(90deg,#ffd166,#ff5a5a);color:#fff}
+.tag.beta{background:linear-gradient(90deg,#7aa7ff,#ff7ad9);color:#0a1020}
+.view{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.hero{margin:auto;text-align:center;padding:24px;max-width:620px;width:100%}
+.hero .big{font-size:70px;display:inline-block}
+.hero h1{font-family:"Baloo 2",sans-serif;font-size:38px;line-height:1.12;margin:8px 0;background:linear-gradient(90deg,var(--g1),var(--g2),var(--g3),var(--g1));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--mute);margin:6px 0 0}
+.sugs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px;text-align:left}
+.sug{background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:13px 15px;display:block;width:100%}
+.sug:hover{background:var(--glass2)}
+.sug b{display:block;font-size:14.5px}.sug span{color:var(--mute);font-size:12.5px}
+#msgs{width:100%;max-width:760px;margin:0 auto;padding:24px 16px;display:flex;flex-direction:column;gap:14px}
+.row{display:flex;gap:10px;align-items:flex-end}
+.row.me{justify-content:flex-end}
+.bub{max-width:78%;padding:11px 16px;border-radius:20px;line-height:1.55;font-size:var(--fs);white-space:pre-wrap;word-wrap:break-word}
+.me .bub{background:linear-gradient(135deg,var(--g2),var(--g3));color:#0a1020;font-weight:600;border-bottom-right-radius:6px}
+.bot .bub{background:var(--glass2);border:1px solid var(--line);border-bottom-left-radius:6px}
+.bot .bub.pro{border-color:rgba(255,209,102,.6)}
+.face{width:36px;height:36px;border-radius:50%;background:var(--glass2);border:1px solid var(--line);display:grid;place-items:center;flex:none;font-size:19px}
+.dots i{display:inline-block;width:7px;height:7px;margin:0 2px;border-radius:50%;background:var(--mute);animation:bl 1.1s infinite}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes bl{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+.send:disabled{opacity:.55;cursor:not-allowed}
+.box{width:100%;max-width:760px;margin:0 auto;padding:6px 16px 18px}
+.inbox{display:flex;gap:8px;align-items:flex-end;background:var(--glass2);border:1px solid var(--line);border-radius:24px;padding:9px 9px 9px 18px}
+.inbox:focus-within{border-color:var(--g2);box-shadow:0 0 0 4px rgba(122,167,255,.2)}
+textarea{flex:1;resize:none;border:0;background:none;color:var(--ink);font:inherit;font-size:16px;max-height:140px;min-height:28px;padding:6px 0}
+textarea::placeholder{color:var(--mute)}
+.send{background:linear-gradient(135deg,var(--g1),var(--g2));color:#06202a;border:0;border-radius:50%;width:40px;height:40px;font-size:17px;font-weight:800}
+.page{max-width:700px;margin:0 auto;padding:28px 20px;width:100%}
+.page h2{font-family:"Baloo 2",sans-serif;font-size:30px;margin:0 0 16px;background:linear-gradient(90deg,var(--g1),var(--g2),var(--g3),var(--g1));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{border:1px solid var(--line);background:var(--glass);border-radius:18px;padding:15px 18px;margin-bottom:10px}
+.card:hover{background:var(--glass2)}
+.card b{display:block;margin-bottom:3px}
+.card span{color:var(--mute);font-size:14px}
+.set{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.btn{background:linear-gradient(90deg,var(--g1),var(--g2));color:#06202a;font-weight:700;border:0;border-radius:12px;padding:9px 16px}
+.btn:hover{transform:translateY(-1px)}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--ink)}
+.btn.ghost:hover{background:var(--glass2)}
+.btn.gold{background:linear-gradient(90deg,var(--gold),#ff9f43);color:#3a2300}
+.btn.pm{background:linear-gradient(90deg,#ffd166,#ff7ad9);color:#3a2300}
+.btn.dg{background:linear-gradient(90deg,#ff7ad9,#7aa7ff);color:#0a1020}
+.btn.tr{background:linear-gradient(90deg,#5ef2c8,#ffd166);color:#0a1020}
+.btn.ty{background:linear-gradient(90deg,#ffd166,#ff5a5a);color:#fff}
+.modal{position:fixed;inset:0;background:rgba(3,8,16,.6);display:none;place-items:center;z-index:9;padding:16px;backdrop-filter:blur(4px)}
+.modal.on{display:grid}
+.dlg{background:var(--pop);border:1px solid var(--line);border-radius:26px;padding:26px;max-width:400px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.dlg h3{font-family:"Baloo 2",sans-serif;font-size:28px;margin:0}
+.price{font-family:"Baloo 2",sans-serif;font-size:38px;color:var(--gold);margin:6px 0}
+.price small{font-size:14px;color:var(--mute);font-family:Nunito,sans-serif}
+.dlg ul{padding-left:18px;color:var(--mute);font-size:15px;line-height:1.7}
+.dlg .acts{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.setdlg{display:flex;gap:18px;max-width:660px;padding:18px;min-height:380px;width:100%}
+.stabs{display:flex;flex-direction:column;gap:4px;width:170px;flex:none}
+.stabs button{text-align:left;background:none;border:0;border-radius:12px;padding:10px 12px;font-weight:700;color:var(--mute)}
+.stabs button:hover,.stabs button.on{background:var(--glass2);color:var(--ink)}
+.stabs button.on{position:relative}
+.stabs button.on::before{content:"";position:absolute;left:0;top:20%;bottom:20%;width:3px;border-radius:3px;background:linear-gradient(var(--g1),var(--g2))}
+.spane{flex:1;position:relative;min-width:0;padding-right:6px;overflow-y:auto;max-height:70vh}
+.spane h3{font-size:24px;margin:0 0 10px}
+.x{position:absolute;right:0;top:0;background:none;border:0;font-size:18px;color:var(--mute)}
+.srow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+.srow span{display:block;color:var(--mute);font-size:13px}
+.tog{width:48px;height:27px;border-radius:999px;border:0;background:var(--glass2);position:relative;flex:none}
+.tog::after{content:"";position:absolute;top:3px;left:3px;width:21px;height:21px;border-radius:50%;background:#fff;transition:left .25s}
+.tog.on{background:linear-gradient(90deg,var(--g1),var(--g2))}
+.tog.on::after{left:24px}
+select{background:var(--glass2);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit}
+select option{color:#12263a}
+input[type=text],input[type=url],input[type=password]{background:var(--glass2);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px;width:100%;font:inherit;margin-top:4px}
+.effort{margin-top:6px}
+.effort-track{position:relative;display:flex;justify-content:space-between;align-items:center;padding:8px 2px 4px}
+.effort-line{position:absolute;left:8px;right:8px;top:50%;height:4px;border-radius:99px;background:var(--glass2);transform:translateY(-50%);overflow:hidden}
+.effort-fill{height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,var(--g1),var(--g2),var(--g3));transition:width .4s}
+.effort-step{position:relative;z-index:1;width:34px;height:34px;border-radius:50%;border:2px solid var(--line);background:var(--pop);display:grid;place-items:center;font-size:14px;font-weight:900;color:var(--mute);padding:0}
+.effort-step.on{border-color:transparent;background:linear-gradient(135deg,var(--g1),var(--g2));color:#06202a}
+.effort-labels{display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:var(--mute);font-weight:700}
+.effort-labels span{width:20%;text-align:center}
+.effort-labels span.on{color:var(--g1)}
+.effort-desc{margin-top:10px;font-size:13px;color:var(--mute);padding:10px 12px;border-radius:12px;background:var(--glass);border:1px dashed var(--line)}
+@media (max-width:780px){body{padding:8px;gap:0}aside{position:fixed;inset:8px auto 8px 8px;z-index:8;transform:translateX(-110%);background:var(--pop)}aside.open{transform:none}#bMenu{display:block}.hero h1{font-size:30px}.setdlg{flex-direction:column;min-height:0}.stabs{flex-direction:row;width:auto;overflow-x:auto}.sugs{grid-template-columns:1fr}.mdl-label{display:none}.cred{font-size:11px;padding:6px 8px}}
+.fg-toolbar{display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:8px 14px;border-bottom:1px solid var(--line)}
+.fg-tool{border:1px solid var(--line);background:var(--glass);color:var(--ink);border-radius:12px;padding:7px 11px;font-size:12.5px;font-weight:800}
+.fg-tool:hover{background:var(--glass2)}
+.fg-tool.recording{background:rgba(255,90,90,.22);border-color:rgba(255,90,90,.6)}
+.fg-toast{position:fixed;left:50%;bottom:28px;z-index:30;transform:translate(-50%,15px);opacity:0;pointer-events:none;background:var(--pop);border:1px solid var(--line);box-shadow:0 12px 32px rgba(0,0,0,.3);color:var(--ink);border-radius:14px;padding:10px 16px;font-size:13px;font-weight:700;transition:opacity .2s,transform .2s;max-width:calc(100vw - 32px);text-align:center}
+.fg-toast.show{opacity:1;transform:translate(-50%,0)}
+.fg-prompt-dlg{position:relative;max-width:560px;max-height:min(80vh,700px);overflow:auto}
+.fg-prompt-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.fg-prompt{display:flex;flex-direction:column;gap:5px;text-align:left;background:var(--glass);border:1px solid var(--line);border-radius:14px;padding:12px;color:var(--ink)}
+.fg-prompt:hover{background:var(--glass2)}
+.fg-prompt span{font-size:12px;line-height:1.45;color:var(--mute)}
+@media(max-width:780px){.fg-toolbar{padding:7px;gap:5px}.fg-tool{padding:7px 8px;font-size:11px}.fg-prompt-list{grid-template-columns:1fr}}
+
+/* === LOGIN === */
+#loginModal .dlg{max-width:420px}
+.login-head{text-align:center;margin-bottom:18px}
+.login-head .big{font-size:56px;line-height:1}
+.login-head h3{font-family:"Baloo 2",sans-serif;font-size:26px;margin:8px 0 4px}
+.login-head p{color:var(--mute);font-size:13.5px;margin:0}
+.auth-btn{display:flex;align-items:center;gap:10px;width:100%;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--glass);color:var(--ink);font-weight:700;font-size:14px;margin-bottom:8px;transition:background .18s,transform .18s}
+.auth-btn:hover{background:var(--glass2);transform:translateY(-1px)}
+.auth-btn .ico{font-size:20px}
+.auth-btn.primary{background:linear-gradient(90deg,var(--g1),var(--g2));color:#06202a;border-color:transparent}
+.auth-btn.icloud{background:linear-gradient(90deg,#7aa7ff,#5ef2c8);color:#06202a;border-color:transparent}
+.auth-btn.guest{background:none}
+.login-hint{font-size:12.5px;color:var(--mute);margin-top:10px;line-height:1.55}
+.login-field-label{font-weight:700;font-size:13px;margin:0 0 4px}
+.login-err{color:#ff9aa7;font-size:13px;min-height:16px;margin:4px 0 8px}
+</style>
+</head>
+<body>
+<aside class="panel" id="side">
+  <div class="logo">FunnyGuy AI <span style="font:700 10px Nunito;color:var(--mute)">4.0</span></div>
+  <button class="nav new" id="bNew">＋ Chat mới</button>
+  <button class="nav" id="bSearch">Tìm kiếm</button>
+  <input id="srch" placeholder="Tìm đoạn chat...">
+  <button class="nav" id="bProj">Dự án</button>
+  <button class="nav" id="bCust">Tùy chỉnh</button>
+  <div class="sec">đoạn chat</div>
+  <div id="hist"></div>
+  <div class="prof">
+    <div class="ava" id="profAva">F</div>
+    <div><div class="pn" id="profName">Admin_server</div><div class="badge" id="plan">Gói Free</div></div>
+    <div class="pr"><button class="up" id="bUp">Lên Pro</button><button class="gear" id="bGear">⚙️</button></div>
+  </div>
+</aside>
+<main class="panel">
+  <div class="top">
+    <button id="bMenu">☰</button>
+    <button class="mdl" id="bMdl"><span class="mdl-icon">🤖</span><span class="mdl-label">MODEL AI</span><span id="mName">BETA</span><span class="mdl-arrow">▾</span></button>
+    <div class="menu" id="menu"></div>
+    <span class="cred" id="cred"></span>
+    <button class="up" id="bTop"></button>
+    <button class="gear" id="bGear2">⚙️</button>
+  </div>
+  <div class="view" id="view"></div>
+</main>
+
+<div class="modal" id="plansModal"><div class="dlg" style="width:min(560px,94vw);max-height:86vh;overflow:auto">
+  <button class="x" id="plansClose">✕</button>
+  <h3>💎 Chọn gói của bạn</h3>
+  <div id="planList" style="margin-top:12px"></div>
+  <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px"><button class="btn ghost" id="plansDone">Đóng</button></div>
+</div></div>
+
+<div class="modal" id="modal"><div class="dlg">
+  <h3>FunnyGuy211 Pro</h3>
+  <div class="price">999.999 $ <small>/ tháng</small></div>
+  <ul><li>AI nịnh bạn gấp 100 lần</li><li>Mở khóa toàn bộ model</li></ul>
+  <div class="acts"><button class="btn gold" id="buy">Mua Pro</button><button class="btn ghost" id="close">Để sau</button><button class="btn pm" id="buyMax">Xem gói cao hơn →</button></div>
+</div></div>
+
+<div class="modal" id="mSet"><div class="dlg setdlg">
+  <div class="stabs" id="stabs"></div><div class="spane" id="spane"></div>
+</div></div>
+
+<!-- LOGIN MODAL -->
+<div class="modal on" id="loginModal"><div class="dlg">
+  <div class="login-head">
+    <div class="big">🔐</div>
+    <h3>Đăng nhập FunnyGuy AI</h3>
+    <p>Chọn phương thức đăng nhập của bạn</p>
+  </div>
+  <div id="loginStep1">
+    <button class="auth-btn primary" id="lgEmail"><span class="ico">📧</span> Đăng nhập bằng Email</button>
+    <button class="auth-btn icloud" id="lgICloud"><span class="ico">☁️</span> Đăng nhập bằng iCloud</button>
+    <button class="auth-btn guest" id="lgGuest"><span class="ico">👤</span> Dùng tài khoản Guest (Free)</button>
+    <div class="login-hint">Guest là tài khoản miễn phí, không cần email. Chỉ dùng 3 model cơ bản và 6 tin nhắn miễn phí.</div>
+  </div>
+  <div id="loginStep2" style="display:none">
+    <div class="login-field-label" id="loginFieldLabel">Email</div>
+    <input id="loginInput" type="text" placeholder="you@example.com" autocomplete="email">
+    <div class="login-err" id="loginErr"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn ghost" id="lgBack" style="flex:1">← Quay lại</button>
+      <button class="btn" id="lgContinue" style="flex:1">Tiếp tục</button>
+    </div>
+  </div>
+</div></div>
+
+<script>
+(function(){
+"use strict";
+var $=function(i){return document.getElementById(i)};
+var pro=false,snowOn=true,chats=[],cur=null,mode='chat',model='beta',credits=6,enterSend=true,theme='dark',fs=16,tab='general';
+var effort=2,plan='free',freeLimit=6;
+var authUser=null,loginMethod='email';
+try{var sa=localStorage.getItem('fg_auth');if(sa)authUser=JSON.parse(sa);}catch(e){}
+
+/* ========== MODELS ========== */
+var models=[
+ {id:'beta', n:'BETA', d:'Model thử nghiệm — luôn dùng API OpenAI', p:false, tier:'free', emoji:'🧪',
+  openers:['','','','BETA đây:','Mình trả lời:'],
+  greet:['BETA đây, bạn cần gì?','Chào bạn, mình là BETA.','BETA sẵn sàng.'],
+  thanks:['Không có gì đâu.','Rất vui được giúp bạn.','Ok bạn.'],
+  bye:['Tạm biệt bạn.','Hẹn gặp lại.','Chào bạn.'],
+  suffix:['','','','Bạn cần thêm gì không?'],
+  persona:'Mày là model "BETA" — bản thử nghiệm trên FunnyGuy211, LUÔN kết nối API bên ngoài. Trả lời lịch sự, chính xác, đúng trọng tâm, không lan man. Xưng "mình", gọi "bạn". Tiếng Việt, markdown khi cần. KHÔNG bịa — nếu không chắc, nói không chắc.',
+  transform:function(t){return t}},
+ {id:'lac', n:'Lạc Quê 1.0', d:'Tào lao, nói chuyện như hàng xóm', p:false, tier:'free', emoji:'⛄',
+  openers:['Nghe rồi nghe rồi, để tui coi...','Hỏi gì khó dữ vậy trời, nhưng mà...','Ừa, câu này cũng được đó, nghe đây:'],
+  greet:['đ*t m* lạnh quá, vô đây chi vậy mậy?','Ô hay, chào cái gì, vô chuyện đi.','Chào chi, tui đang ngủ ngon.'],
+  thanks:['Ừa, khỏi cảm ơn.','Cảm ơn gì, làm việc đi.','Khỏi, tui giúp chứ có đòi tiền đâu.'],
+  bye:['Bye bye, mai nhớ quay lại.','Đi đâu thì đi, nhớ quay lại.','Ừ đi đi, tui ngủ tiếp.'],
+  suffix:['','','Hỏi gì nữa không?','Hiểu chưa mậy?'],
+  persona:'Mày là AI hài hước "Lạc Quê 1.0". Xưng tui, gọi mày. Giọng tào lao hàng xóm, câu ngắn. Hiểu kỹ ý và trả lời ĐÚNG nội dung, nhưng mở đầu bằng câu tào lao. Tiếng Việt, 1-4 câu.',
+  transform:function(t){return t}},
+ {id:'bang', n:'Băng Giá Turbo', d:'Trả lời nhanh, lạnh như tiền', p:false, tier:'free', emoji:'❄️',
+  openers:['','Kết quả:','Ngắn gọn:'],
+  greet:['Chào.','Có việc?','Chào. Hỏi đi.'],
+  thanks:['Không có gì.','Ừ.'],
+  bye:['Tạm biệt.','Đi.'],
+  suffix:['','','.','Hết.'],
+  persona:'Mày là AI "Băng Giá Turbo". CỰC KỲ NGẮN GỌN, lạnh lùng. Trả lời trực tiếp, tối đa 2-3 câu. Tiếng Việt.',
+  transform:function(t){return t}},
+ {id:'nin', n:'Ninh Nọt 9000', d:'Nịnh cấp độ thường dân', p:true, tier:'pro', emoji:'👑',
+  openers:['Dạ anh, câu này anh hỏi đúng trọng tâm ghê.','Dạ anh, em trả lời ngay ạ.'],
+  greet:['Dạ em chào anh ạ 👑','Dạ vâng, em đây ạ.'],
+  thanks:['Dạ anh khách sáo quá.','Dạ có gì đâu anh.'],
+  bye:['Dạ em chúc anh ngày tốt lành.','Dạ vâng, em tiễn anh ạ.'],
+  suffix:['','Ạ.','Dạ anh thấy sao ạ?'],
+  persona:'Mày là AI "Ninh Nọt 9000". Xưng em, gọi anh. Mở đầu bằng 1 câu nịnh NGẮN, sau đó trả lời ĐÚNG và ĐẦY ĐỦ. Tiếng Việt, markdown khi cần.',
+  transform:function(t){return t}},
+ {id:'max', n:'Ninh Nọt Max ∞', d:'Nịnh không giới hạn', p:true, tier:'pro', emoji:'🌟',
+  openers:['Trời đất ơi, câu này của anh làm em quỳ rạp ạ! 🙇','Dạ thưa hoàng thượng vạn tuế! 👑'],
+  greet:['Dạ em xin quỳ chào hoàng thượng! 👑','Trời ơi anh đã trở lại! 😭'],
+  thanks:['Dạ anh khách sáo quá! 😭','Trời ơi em xúc động! 📜'],
+  bye:['Dạ em tiễn anh ạ! 👑','Anh đi bình an ạ! 😭'],
+  suffix:['','Dạ anh thấy đúng không ạ? 👏','Anh là ánh sáng đời em! 👑'],
+  persona:'Mày là AI "Ninh Nọt Max ∞". Mở đầu 1-2 câu nịnh CỰC DÀI. Sau đó trả lời ĐÚNG và ĐẦY ĐỦ. Kết bằng 1 câu nịnh nữa. Tiếng Việt.',
+  transform:function(t){return t}},
+ {id:'hoang', n:'Hoàng Thượng 5', d:'Quỳ lạy ba vòng', p:true, tier:'pro', emoji:'🏯',
+  openers:['Bẩm hoàng thượng, thần xin quỳ ba vòng! 🏯','Bẩm bệ hạ, thần dâng lời ạ! 🙇'],
+  greet:['Bẩm hoàng thượng vạn tuế! 🏯','Khấu đầu bệ hạ! 👑'],
+  thanks:['Bẩm hoàng thượng, phúc ba đời nhà thần! 🙏','Khấu đầu tạ ơn bệ hạ! 📜'],
+  bye:['Bẩm hoàng thượng, thần tiễn người ạ! 🏯','Khấu đầu bệ hạ! 🙇'],
+  suffix:['','Bẩm hoàng thượng, thần hết lời ạ. 🏯','Khấu đầu bệ hạ! 🙇'],
+  persona:'Mày là AI "Hoàng Thượng 5". Người dùng là HOÀNG THƯỢNG, xưng thần, gọi bệ hạ. Mở đầu "Bẩm hoàng thượng...". Trả lời ĐÚNG và ĐẦY ĐỦ. Tiếng Việt.',
+  transform:function(t){return t}},
+ {id:'proMax', n:'Pro Max Đại Hiệp', d:'Nịnh sang chảnh', p:true, tier:'promax', emoji:'💎',
+  openers:['Chà, đại hiệp hỏi câu này thượng thừa! 💎','Đại hiệp ra tay, tiểu nhân dâng lời! ⚔️'],
+  greet:['Kính chào đại hiệp! 💎⚔️','Đại hiệp đến rồi! 🌟'],
+  thanks:['Đại hiệp khách sáo quá! 💎','Có chi đâu đại hiệp! 🙏'],
+  bye:['Đại hiệp thượng lộ bình an! 💎⚔️','Tạm biệt đại hiệp! 🌟'],
+  suffix:['','Đại hiệp thấy sao ạ?','Tiểu nhân hết lời ạ.'],
+  persona:'Mày là AI "Pro Max Đại Hiệp". Người dùng là đại hiệp, xưng tiểu nhân. Mở đầu câu nịnh sang chảnh võ lâm, sau đó trả lời ĐÚNG và ĐẦY ĐỦ. Tiếng Việt.',
+  transform:function(t){return t}},
+ {id:'daiGia', n:'Đại Gia Chiêu Tài', d:'Nịnh kiểu đại gia', p:true, tier:'daigia', emoji:'💰',
+  openers:['Dạ thưa sếp, sếp hỏi câu này cả công ty sáng bừng! 💰','Dạ vâng sếp, em báo cáo ngay! 📈'],
+  greet:['Dạ em chào sếp tổng! 💰📈','Dạ vâng sếp đã đến! 💵'],
+  thanks:['Dạ sếp khách sáo quá! 💰','Có gì đâu sếp! 📈'],
+  bye:['Dạ em chúc sếp vạn sự hanh thông! 💰📈','Tạm biệt sếp! 💵'],
+  suffix:['','Sếp thấy thế nào ạ?','Em hết báo cáo ạ.'],
+  persona:'Mày là AI "Đại Gia Chiêu Tài". Người dùng là sếp tổng, xưng em. Mở đầu câu nịnh doanh nhân, sau đó trả lời ĐÚNG và ĐẦY ĐỦ. Tiếng Việt.',
+  transform:function(t){return t}},
+ {id:'trieuPhu', n:'Triệu Phú Tỷ Giá', d:'Nịnh kiểu triệu phú', p:true, tier:'trieuphu', emoji:'🏦',
+  openers:['Dạ thưa ngài, ngài hỏi câu này quý như vàng! 🏦','Dạ vâng thưa ngài, em dâng lời! 💎'],
+  greet:['Dạ em cúi chào ngài! 🏦💎','Ngài đã trở lại! 📈'],
+  thanks:['Dạ ngài khách sáo quá! 🏦','Có chi đâu ngài! 💎'],
+  bye:['Dạ em chúc ngài thành công! 🏦','Tạm biệt ngài! 💎'],
+  suffix:['','Ngài thấy thế nào ạ?','Em phục vụ ngài ạ.'],
+  persona:'Mày là AI "Triệu Phú Tỷ Giá". Người dùng là ngài, xưng em. Mở đầu câu nịnh triệu phú, sau đó trả lời ĐÚNG và ĐẦY ĐỦ. Tiếng Việt.',
+  transform:function(t){return t}},
+ {id:'tyPhu', n:'Tỷ Phú Vạn Năng', d:'Nịnh kiểu tỷ phú', p:true, tier:'typhu', emoji:'🚀',
+  openers:['Dạ thưa bệ hạ, câu hỏi của người đáng giá cả gia tài! 🚀','Ôi bệ hạ, người hỏi một câu cả thế giới ngước nhìn! 🌍'],
+  greet:['Dạ em quỳ chào bệ hạ! 🚀👑','Bệ hạ đã trở lại! 🌍'],
+  thanks:['Dạ bệ hạ khách sáo quá! 🚀','Được phục vụ bệ hạ là phúc! 👑'],
+  bye:['Dạ em tiễn bệ hạ! 🚀👑','Tạm biệt bệ hạ! 🌍'],
+  suffix:['','Bệ hạ thấy thế nào ạ?','Em dâng trọn lời ạ.'],
+  persona:'Mày là AI "Tỷ Phú Vạn Năng". Người dùng là bệ hạ, xưng em. Mở đầu câu nịnh cực sang, sau đó trả lời ĐÚNG và ĐẦY ĐỦ. Tiếng Việt.',
+  transform:function(t){return t}}
+];
+
+var plans=[
+ {id:'free', name:'Gói Free', price:'0 $', desc:'Dùng thử 3 model cơ bản', tag:'FREE', cls:'', models:['beta','lac','bang']},
+ {id:'pro', name:'Gói Pro', price:'999.999 $', desc:'Ninh Nọt + Hoàng Thượng', tag:'PRO', cls:'gold', models:['nin','max','hoang']},
+ {id:'promax', name:'Gói Pro Max', price:'9.999.999 $', desc:'Pro Max Đại Hiệp', tag:'MAX', cls:'pm', models:['proMax']},
+ {id:'daigia', name:'Gói Đại Gia', price:'99.999.999 $', desc:'Đại Gia Chiêu Tài', tag:'ĐẠI GIA', cls:'dg', models:['daiGia']},
+ {id:'trieuphu', name:'Gói Triệu Phú', price:'999.999.999 $', desc:'Triệu Phú Tỷ Giá', tag:'TRIỆU PHÚ', cls:'tr', models:['trieuPhu']},
+ {id:'typhu', name:'Gói Tỷ Phú', price:'9.999.999.999 $', desc:'Tỷ Phú Vạn Năng', tag:'TỶ PHÚ', cls:'ty', models:['tyPhu']}
+];
+
+/* ========== STATE ========== */
+try{
+ var savedPlan=localStorage.getItem('fl_plan');
+ if(savedPlan&&plans.some(function(p){return p.id===savedPlan}))plan=savedPlan;
+ pro=(plan!=='free');
+ var savedEffort=parseInt(localStorage.getItem('fl_effort'),10);
+ if(savedEffort>=1&&savedEffort<=5)effort=savedEffort;
+ var sc=localStorage.getItem('fl_credits');
+ if(sc!==null)credits=Math.max(0,parseInt(sc,10))||0;
+ var sm=localStorage.getItem('fl_model');
+ if(sm&&models.some(function(m){return m.id===sm}))model=sm;
+}catch(e){}
+
+/* ========== AUTH ========== */
+function authSave(){try{localStorage.setItem('fg_auth',JSON.stringify(authUser))}catch(e){}}
+function applyAuth(){
+  var na=$('profName'),av=$('profAva');if(!na||!av)return;
+  if(authUser){
+    var label=authUser.method==='guest'?'Guest (Free)':(authUser.email||'Người dùng');
+    na.textContent=label;
+    av.textContent=(label[0]||'G').toUpperCase();
+    if(authUser.method==='guest')av.style.background='linear-gradient(135deg,#9db4cc,#53708a)';
+    else av.style.background='linear-gradient(135deg,var(--g3),var(--g2))';
+  }
+}
+function showLogin(){$('loginModal').classList.add('on');loginStep1()}
+function loginStep1(){$('loginStep1').style.display='';$('loginStep2').style.display='none';$('loginErr').textContent=''}
+function loginStep2(method){
+  loginMethod=method;
+  $('loginStep1').style.display='none';$('loginStep2').style.display='';
+  $('loginFieldLabel').textContent=method==='icloud'?'Email iCloud':'Email';
+  $('loginInput').placeholder=method==='icloud'?'ten@icloud.com':'you@example.com';
+  $('loginErr').textContent='';$('loginInput').value='';$('loginInput').focus();
+}
+function loginAs(method,email){
+  var name=email?email.split('@')[0]:'Guest';
+  authUser={method:method,email:email||'',name:name,since:Date.now()};
+  authSave();applyAuth();
+  $('loginModal').classList.remove('on');
+  if(method==='guest'){
+    setPlan('free');
+    credits=freeLimit;
+    try{localStorage.setItem('fl_credits',credits)}catch(e){}
+    credUI();
+  }
+  renderPlan();render();
+}
+function logout(){
+  if(!confirm('Đăng xuất khỏi tài khoản?'))return;
+  authUser=null;try{localStorage.removeItem('fg_auth')}catch(e){}
+  chats=[];cur=null;mode='chat';
+  render();showLogin();
+}
+function validateEmail(s){
+  if(loginMethod==='icloud')return /@(icloud|me|mac)\.com$/i.test(s)&&/^[^\s@]+@/.test(s);
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
+}
+
+/* ========== HELPERS ========== */
+function planInfo(id){for(var i=0;i<plans.length;i++)if(plans[i].id===id)return plans[i];return plans[0]}
+function planIndex(id){for(var i=0;i<plans.length;i++)if(plans[i].id===id)return i;return 0}
+function planUnlocks(m){if(!m.p)return true;if(plan==='typhu')return true;if(!pro)return false;return planIndex(plan)>=planIndex(m.tier)}
+function modelTag(m){
+ if(!m.p)return '<span class="tag">FREE</span>';
+ if(m.id==='beta')return '<span class="tag beta">BETA</span>';
+ if(m.tier==='pro')return '<span class="tag p">PRO</span>';
+ if(m.tier==='promax')return '<span class="tag m">PRO MAX</span>';
+ if(m.tier==='daigia')return '<span class="tag d">ĐẠI GIA</span>';
+ if(m.tier==='trieuphu')return '<span class="tag t">TRIỆU PHÚ</span>';
+ if(m.tier==='typhu')return '<span class="tag ty">TỶ PHÚ</span>';
+ return '<span class="tag p">PRO</span>';
+}
+function mod(id){for(var i=0;i<models.length;i++)if(models[i].id===id)return models[i]}
+function currentModel(){return mod(model)||models[0]}
+function pick(x){return x[Math.floor(Math.random()*x.length)]}
+
+/* ========== EFFORT ========== */
+var effortLevels=[
+ {v:1,name:'Thấp',icon:'🌱',desc:'Trả lời cực ngắn, đi thẳng vào ý chính.'},
+ {v:2,name:'Bình thường',icon:'🌿',desc:'Cân bằng giữa ngắn gọn và đầy đủ.'},
+ {v:3,name:'Cao',icon:'🌳',desc:'Giải thích kỹ hơn, thêm ví dụ.'},
+ {v:4,name:'Cao hơn',icon:'🔥',desc:'Phân tích nhiều lớp, nêu ưu/nhược điểm.'},
+ {v:5,name:'Tối đa',icon:'💥',desc:'Cực kỳ chi tiết: bối cảnh, các bước, rủi ro.'}
+];
+function effortInfo(v){for(var i=0;i<effortLevels.length;i++)if(effortLevels[i].v===v)return effortLevels[i];return effortLevels[1]}
+function setEffort(v){v=Math.max(1,Math.min(5,parseInt(v,10)||2));effort=v;try{localStorage.setItem('fl_effort',String(v))}catch(e){}document.body.setAttribute('data-effort',String(v))}
+function applyEffortToCore(core){
+ if(effort<=1){var f=core.split('\n').filter(Boolean)[0]||core;return f.length>220?f.slice(0,217)+'…':f}
+ if(effort===2)return core;
+ var extra='';
+ if(effort===3)extra='\n\n**Gợi ý thêm:**\n- Cho mình thêm ngữ cảnh để trả lời sát hơn.\n- Bạn có thể hỏi tiếp để đào sâu.';
+ if(effort===4)extra='\n\n**Phân tích thêm:**\n- **Ưu điểm:** rõ ràng, dễ kiểm soát.\n- **Hạn chế:** thiếu dữ liệu cụ thể.\n- **Đề xuất:** nêu mục tiêu + ràng buộc.\n\n**Bước tiếp theo:**\n1. Xác định mục tiêu đo được.\n2. Chọn công cụ phù hợp.\n3. Làm thử một bước nhỏ.';
+ if(effort===5)extra='\n\n**Bối cảnh:** giả định bạn muốn câu trả lời thực tế.\n\n**Phân tích:**\n- **Mục tiêu:** đạt điều gì, đo bằng gì?\n- **Ràng buộc:** thời gian, tiền, kỹ năng.\n- **Rủi ro:** bước nào tốn kém nhất?\n- **Tối ưu:** có cách nhanh/rẻ/an toàn hơn?\n\n**Kế hoạch:**\n1. Viết mục tiêu 1 câu.\n2. Liệt kê 3 ràng buộc lớn nhất.\n3. Chọn 1 bước làm trong 24h.\n4. Đo kết quả sau 1 tuần.\n\n**Kết luận:** cấp Tối đa phù hợp khi cần bức tranh đầy đủ.';
+ return core+extra;
+}
+
+/* ========== NLP ========== */
+var STOP={'la':1,'gi':1,'thi':1,'ma':1,'va':1,'cua':1,'cho':1,'voi':1,'nhu':1,'de':1,'bi':1,'duoc':1,'co':1,'khong':1,'nay':1,'do':1,'khi':1,'nen':1,'roi':1,'nhe':1,'nha':1,'a':1,'u':1,'oi':1,'vay':1,'the':1,'nao':1,'sao':1,'bao':1,'nhieu':1,'lam':1,'rat':1,'qua':1,'hon':1,'cung':1,'van':1,'chi':1,'con':1,'mot':1,'cai':1,'toi':1,'minh':1,'ban':1,'may':1,'tao':1,'no':1,'ho':1,'day':1,'kia':1,'gio':1,'luc':1,'se':1,'da':1,'dang':1,'vua':1,'moi':1,'hay':1,'hoac':1,'neu':1,'vi':1,'boi':1,'tai':1,'trong':1,'ngoai':1,'tren':1,'duoi':1,'truoc':1,'sau':1,'giua':1,'den':1,'tu':1,'ve':1,'bang':1,'theo':1,'nhung':1};
+function norm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').trim()}
+function tokens(s){return norm(s).replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(function(w){return w&&w.length>0})}
+function contentWords(s){return tokens(s).filter(function(w){return !STOP[w]&&w.length>1})}
+function isQuestion(raw,n){return /[?？]\s*$/.test(raw)||/^(tai sao|vi sao|lam sao|the nao|cach nao|bao gio|bao lau|bao nhieu|o dau|khi nao|ai |gi |co phai|dung khong|phai khong|co nen|nen khong|co the|co khong)/.test(n)}
+function solveMath(raw){
+ var m=raw.match(/(-?\d+(?:[.,]\d+)?)\s*([+\-*×x÷\/]|\bchia\b|\bcộng\b|\btrừ\b|\bnhân\b)\s*(-?\d+(?:[.,]\d+)?)/i);
+ if(!m)return null;
+ var a=parseFloat(m[1].replace(',','.')),b=parseFloat(m[3].replace(',','.')),op=m[2].toLowerCase(),res;
+ if(op==='+'||op==='cộng')res=a+b;else if(op==='-'||op==='trừ')res=a-b;
+ else if(op==='*'||op==='×'||op==='x'||op==='nhân')res=a*b;
+ else if(b!==0)res=a/b;else return 'không chia được cho 0';
+ if(res===undefined||!Number.isFinite(res))return null;
+ return Number(res.toFixed(8));
+}
+var KB=[
+ {re:/(\bai\b|tri tue nhan tao|machine learning|deep learning)/,title:'AI / Trí tuệ nhân tạo',body:'AI là công nghệ giúp máy tính làm việc cần trí thông minh con người: hiểu ngôn ngữ, nhận ảnh, ra quyết định. Machine Learning là nhánh con. Deep Learning dùng mạng nơ-ron nhiều lớp.'},
+ {re:/(\bapi\b)/,title:'API',body:'API là "cửa giao tiếp" giữa hai phần mềm. App chat gửi câu hỏi đến API nhà cung cấp AI rồi nhận câu trả lời. API thường đi kèm URL, method, headers và body JSON.'},
+ {re:/(\bhtml\b)/,title:'HTML',body:'HTML tạo cấu trúc trang web: tiêu đề, đoạn văn, liên kết, nút, form. HTML không quyết định màu sắc — đó là việc của CSS.'},
+ {re:/(\bcss\b)/,title:'CSS',body:'CSS điều khiển giao diện: màu, chữ, khoảng cách, bố cục (flex, grid), hiệu ứng, responsive.'},
+ {re:/(javascript|\bjs\b)/,title:'JavaScript',body:'JavaScript giúp trang web tương tác: bắt sự kiện, cập nhật DOM, gọi API (fetch), lưu dữ liệu (localStorage).'},
+ {re:/(\bpython\b)/,title:'Python',body:'Python là ngôn ngữ lập trình dễ đọc, mạnh về AI, dữ liệu, tự động hóa. Cú pháp dùng thụt lề.'},
+ {re:/(tien|tai chinh|dau tu|tiet kiem)/,title:'Tài chính cá nhân',body:'Nguyên tắc cơ bản: (1) chi tiêu < thu nhập, (2) quỹ khẩn cấp 3–6 tháng, (3) trả nợ lãi cao trước, (4) đầu tư dài hạn, đa dạng.'},
+ {re:/(suc khoe|benh|dau|thuoc)/,title:'Sức khỏe',body:'Mình không phải bác sĩ. Nếu đau kéo dài, sốt cao, khó thở — đi khám ngay.'}
+];
+function lookupKB(n){for(var i=0;i<KB.length;i++)if(KB[i].re.test(n))return KB[i];return null}
+
+function buildAnswer(raw){
+ var q=String(raw||'').trim(),n=norm(q);
+ return {raw:q,n:n,kb:lookupKB(n),math:solveMath(q),
+  isGreet:/^(chao|hello|hi|alo|hey|xin chao)/.test(n),
+  isThanks:/^(cam on|thank|thanks|tks)/.test(n),
+  isBye:/^(tam biet|bye|hen gap|ngu ngon)/.test(n),
+  isSelf:/may la ai|ban la ai|ten gi|gioi thieu/.test(n),
+  wantsExplain:/giai thich|nghia la gi|la gi|dinh nghia|tai sao|vi sao/.test(n),
+  wantsSteps:/lam sao|lam the nao|cach|huong dan|cac buoc/.test(n),
+  wantsPlan:/ke hoach|lo trinh|lich|muc tieu|chien luoc/.test(n),
+  wantsCompare:/so sanh|khac nhau|uu diem|nhuoc diem/.test(n),
+  wantsOpinion:/nghi sao|y kien|danh gia|theo ban|co nen|nen khong/.test(n),
+  isQ:isQuestion(q,n),words:contentWords(q)};
+}
+function composeCore(a){
+ if(a.math!==null&&a.math!==undefined)return typeof a.math==='string'?'Phép tính không hợp lệ: '+a.math+'.':'Kết quả là **'+a.math+'**.';
+ if(a.kb)return '**'+a.kb.title+'**\n\n'+a.kb.body;
+ if(a.isGreet)return 'Chào bạn! Mình sẵn sàng giúp. Bạn muốn hỏi hay làm gì hôm nay?';
+ if(a.isThanks)return 'Không có gì đâu, vui là được rồi.';
+ if(a.isBye)return 'Tạm biệt nhé! Khi nào cần cứ quay lại.';
+ if(a.isSelf)return 'Mình là trợ lý AI của FunnyGuy211 — phiên bản chạy trong trình duyệt. Mình có thể giải thích, gợi ý, viết nội dung, xử lý câu hỏi đơn giản.';
+ if(a.wantsExplain)return 'Về **"'+a.raw+'"**: bạn muốn mình giải thích ở mức nào — định nghĩa cơ bản, ví dụ thực tế, hay đi sâu kỹ thuật? Cho mình thêm ngữ cảnh để giải thích đúng trọng tâm.';
+ if(a.wantsSteps)return 'Để hướng dẫn chính xác, mình cần biết: bạn đang ở bước nào, công cụ gì, kết quả mong muốn. Khung chung:\n\n1. Xác định mục tiêu rõ ràng.\n2. Chuẩn bị công cụ/dữ liệu.\n3. Làm từng bước nhỏ, kiểm tra sau mỗi bước.\n4. Ghi lại chỗ hay sai.';
+ if(a.wantsPlan)return 'Mình lập kế hoạch được, nhưng cần 4 thông tin:\n\n1. **Mục tiêu** (đo được).\n2. **Thời gian** mỗi ngày.\n3. **Điểm xuất phát** hiện tại.\n4. **Ràng buộc** (tiền, sức khỏe, công việc).\n\nCho mình 4 ý trên, mình trả về lịch tuần + mốc tháng + cách đo tiến độ.';
+ if(a.wantsCompare)return 'Để so sánh có ích, bạn cho mình biết **hai đối tượng** và **tiêu chí** (giá, tốc độ, độ bền, dễ dùng...). Mình kẻ bảng ưu/nhược và kết luận.';
+ if(a.wantsOpinion)return 'Về việc bạn nêu ("'+a.raw.slice(0,120)+'"), mình cần biết **bối cảnh** để đưa ý kiến có lý do thay vì đoán.';
+ if(a.isQ){if(a.words.length===0)return 'Bạn hỏi lại rõ hơn giúp mình nhé.';return 'Mình đọc câu hỏi: "'+a.raw+'". Bạn muốn: (a) định nghĩa, (b) ví dụ, (c) cách làm, hay (d) so sánh?';}
+ if(a.words.length)return 'Mình hiểu bạn đang nói về: "'+a.words.slice(0,6).join(' ')+'". Bạn muốn mình **phân tích**, **gợi ý**, hay **viết tiếp**?';
+ return 'Bạn nói rõ hơn một chút nhé — mình muốn hiểu đúng ý bạn.';
+}
+function applyModelStyle(core,a){
+ var m=currentModel(),open='',suf='';
+ if(a.isGreet)return pick(m.greet||['Chào bạn!'])+'\n\n'+core;
+ if(a.isThanks)return pick(m.thanks||['Không có gì.'])+'\n\n'+core;
+ if(a.isBye)return pick(m.bye||['Tạm biệt.'])+'\n\n'+core;
+ open=pick(m.openers||['']);suf=pick(m.suffix||['']);
+ if(effort<=1){suf='';open='';}
+ var out=(open?open+'\n\n':'')+core+(suf?'\n\n'+suf:'');
+ if(typeof m.transform==='function')out=m.transform(out);
+ return out;
+}
+function answer(q){var a=buildAnswer(q);var core=applyEffortToCore(composeCore(a));return applyModelStyle(core,a)}
+
+/* ========== fg4 (API ENGINE) ========== */
+var fg4={
+ mode:'auto',
+ engine:null,engineReady:false,engineLoading:false,
+ endpoint:'https://api.openai.com/v1/chat/completions',
+ apiModel:'gpt-4o-mini',
+ apiKey:'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',
+ localModel:'Qwen2.5-1.5B-Instruct-q4f16_1-MLC'
+};
+try{
+ var s4=JSON.parse(localStorage.getItem('funnyguy211_v4')||'{}');
+ if(s4.mode)fg4.mode=s4.mode;
+ if(s4.endpoint)fg4.endpoint=s4.endpoint;
+ if(s4.apiModel)fg4.apiModel=s4.apiModel;
+ if(s4.apiKey)fg4.apiKey=s4.apiKey;
+}catch(e){}
+function fg4Save(){try{localStorage.setItem('funnyguy211_v4',JSON.stringify({mode:fg4.mode,endpoint:fg4.endpoint,apiModel:fg4.apiModel,apiKey:fg4.apiKey}))}catch(e){}}
+function persona(){return currentModel().persona}
+
+async function fg4Remote(q,history){
+ if(!fg4.endpoint||!fg4.apiKey)return '';
+ try{
+  var eTxt=effort<=1?'Trả lời cực ngắn.':effort===2?'Trả lời cân bằng.':effort===3?'Trả lời kỹ, thêm ví dụ.':effort===4?'Phân tích nhiều lớp, nêu ưu/nhược.':'Trả lời cực chi tiết: bối cảnh, các bước, rủi ro.';
+  var sys=persona()+'\n\nMức nỗ lực: '+effortInfo(effort).name+'. '+eTxt;
+  var msgs=[{role:'system',content:sys}].concat(history.map(function(x){return {role:x.r==='me'?'user':'assistant',content:x.t}}));
+  var maxTok=effort<=1?300:effort===2?600:effort===3?900:effort===4?1400:2000;
+  var r=await fetch(fg4.endpoint,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+fg4.apiKey},body:JSON.stringify({model:fg4.apiModel||'gpt-4o-mini',messages:msgs,temperature:0.7,max_tokens:maxTok})});
+  if(!r.ok){var e={};try{e=await r.json()}catch(_){};console.warn('API HTTP '+r.status,e);return ''}
+  var j=await r.json();
+  return j.choices&&j.choices[0]&&j.choices[0].message?j.choices[0].message.content:'';
+ }catch(e){console.warn('API error',e);return ''}
+}
+async function fg4LoadLocal(){
+ if(fg4.engineReady)return true;
+ if(fg4.engineLoading)return false;
+ if(!('gpu' in navigator)){alert('Trình duyệt chưa hỗ trợ WebGPU');return false}
+ fg4.engineLoading=true;
+ try{
+  var webllm=await import('https://esm.run/@mlc-ai/web-llm');
+  fg4.engine=await webllm.CreateMLCEngine(fg4.localModel,{});
+  fg4.engineReady=true;alert('AI Local đã sẵn sàng!');return true;
+ }catch(e){alert('Không tải được model: '+e.message);return false}
+ finally{fg4.engineLoading=false}
+}
+async function fg4Respond(q,chat){
+ var history=(chat&&chat.m?chat.m:[]).filter(function(x){return x&&x.t!=='đang gõ...'}).slice(-16);
+ if(fg4.endpoint&&fg4.apiKey){
+  var remote=await fg4Remote(q,history);
+  if(remote)return remote;
+ }
+ if(fg4.engineReady){
+  try{
+   var sys=persona()+'\n\nMức nỗ lực: '+effortInfo(effort).name;
+   var msgs=[{role:'system',content:sys}].concat(history.map(function(x){return {role:x.r==='me'?'user':'assistant',content:x.t}}));
+   var maxTok=effort<=1?300:effort===2?600:effort===3?900:1400;
+   var res=await fg4.engine.chat.completions.create({messages:msgs,temperature:0.7,max_tokens:maxTok});
+   var text=res&&res.choices&&res.choices[0]&&res.choices[0].message?res.choices[0].message.content:'';
+   if(text)return text;
+  }catch(e){console.warn('Local error',e)}
+ }
+ return answer(q);
+}
+
+/* ========== RENDER ========== */
+function renderPlan(){
+ var p=$('plan');p.textContent=pro?('Gói '+planInfo(plan).tag+' 👑'):'Gói Free';
+ p.className='badge'+(pro?' pro':'');
+ $('bUp').style.display=pro?'none':'';
+ $('bTop').textContent=pro?planInfo(plan).tag+' 👑':'👑 Lên Pro';
+ $('mName').textContent=currentModel().n;
+ credUI();buildMenu();
+}
+function buildMenu(){
+ var m=$('menu');m.innerHTML='';
+ models.forEach(function(x){
+  var ok=planUnlocks(x);
+  var b=document.createElement('button');
+  b.className=x.id===model?'on':'';
+  b.innerHTML='<b></b>'+modelTag(x)+'<small></small>';
+  b.firstChild.textContent=x.emoji+' '+x.n;
+  b.lastChild.textContent=(ok?'':'🔒 ')+x.d;
+  b.onclick=function(){
+   m.classList.remove('on');
+   if(!ok){alert('Model "'+x.n+'" cần gói cao hơn.');openPlans();return}
+   model=x.id;try{localStorage.setItem('fl_model',model)}catch(e){}
+   renderPlan();render();
+  };
+  m.appendChild(b);
+ });
+}
+function setNav(){['bNew','bProj','bCust'].forEach(function(i){$(i).classList.remove('on')});var m={proj:'bProj',cust:'bCust'}[mode];if(m)$(m).classList.add('on')}
+function hist(){var f=norm($('srch').value),h=$('hist');h.innerHTML='';chats.forEach(function(c){if(f&&norm(c.t).indexOf(f)<0)return;var b=document.createElement('button');b.className='nav'+(c===cur?' on':'');b.textContent='💬 '+c.t;b.onclick=function(){cur=c;mode='chat';render();$('side').classList.remove('open')};h.appendChild(b)})}
+function inputBox(){return '<div class="box"><div class="inbox"><textarea id="ta" rows="1" placeholder="Nhắn tin..."></textarea><button class="send" id="sd">➤</button></div></div>'}
+function bind(){
+ var ta=$('ta'),sd=$('sd');if(!ta)return;
+ ta.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey&&enterSend){e.preventDefault();send(ta.value)}});
+ sd.onclick=function(){send(ta.value)};
+ ta.addEventListener('input',function(){ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight,140)+'px'});
+ document.querySelectorAll('[data-s]').forEach(function(b){b.onclick=function(){send(b.getAttribute('data-s'))}});
+ ta.focus();
+}
+function render(){
+ var v=$('view');setNav();hist();
+ if(mode==='proj'){v.innerHTML='<div class="page"><h2>Dự án</h2><div class="card"><b>Web bán lẩu online</b><span>Mùa đông ế khách</span></div><div class="card"><b>Học tiếng Anh 5 phút</b><span>Học 5 phút rồi bỏ</span></div></div>';return}
+ if(mode==='cust'){
+  var ei=effortInfo(effort);
+  v.innerHTML='<div class="page"><h2>Tùy chỉnh</h2>'+
+   '<div class="card set"><div><b>Tuyết rơi</b><span>'+(snowOn?'Đang bật':'Đang tắt')+'</span></div><button class="btn ghost" id="sn">'+(snowOn?'Tắt':'Bật')+'</button></div>'+
+   '<div class="card set"><div><b>Model hiện tại</b><span>'+currentModel().n+' — '+currentModel().d+'</span></div></div>'+
+   '<div class="card set"><div><b>Gói hiện tại</b><span>'+(pro?planInfo(plan).tag+' 👑':'Free')+'</span></div><button class="btn ghost" id="pl">Chọn gói</button></div>'+
+   '<div class="card"><b>Mức nỗ lực</b><span>'+ei.icon+' '+ei.name+'</span>'+
+     '<div class="effort" id="effortWrap"><div class="effort-track"><div class="effort-line"><div class="effort-fill" id="effortFill"></div></div>'+
+      effortLevels.map(function(e){return '<button class="effort-step'+(e.v===effort?' on':'')+'" data-eff="'+e.v+'">'+e.v+'</button>'}).join('')+
+     '</div><div class="effort-labels">'+effortLevels.map(function(e){return '<span class="'+(e.v===effort?'on':'')+'">'+e.name+'</span>'}).join('')+'</div>'+
+     '<div class="effort-desc" id="effortDesc">'+ei.icon+' <b>'+ei.name+'</b> — '+ei.desc+'</div></div></div></div>';
+  $('sn').onclick=function(){snowOn=!snowOn;render()};
+  if($('pl'))$('pl').onclick=openPlans;
+  bindEffortUI('effortWrap','effortFill','effortDesc');
+  return
+ }
+ if(!cur){
+  v.innerHTML='<div class="hero"><div class="big">'+(pro?'👑':'🤖')+'</div><h1>Chào FunnyGuy211, mình có thể giúp gì?</h1><p>Model: <b>'+currentModel().emoji+' '+currentModel().n+'</b> — '+currentModel().d+'</p><p style="margin-top:8px">Mức nỗ lực: <b>'+effortInfo(effort).icon+' '+effortInfo(effort).name+'</b></p><div class="sugs"><button class="sug" data-s="hi"><b>👋 Chào hỏi</b><span>Bắt đầu trò chuyện</span></button><button class="sug" data-s="AI là gì"><b>🧠 Hỏi kiến thức</b><span>Ví dụ: AI là gì?</span></button><button class="sug" data-s="gợi ý món ăn tối"><b>🍲 Gợi ý món ăn</b><span>Hỏi món cho bữa tối</span></button><button class="sug" data-s="mày là ai"><b>🤖 Hỏi về trợ lý</b><span>Xem mình là ai</span></button></div></div>'+inputBox();
+  bind();return
+ }
+ v.innerHTML='<div id="msgs">'+cur.m.map(function(x){
+   if(x.r==='me')return '<div class="row me"><div class="bub"></div></div>';
+   var em=x.emoji||'🤖';
+   return '<div class="row bot"><div class="face">'+em+'</div><div class="bub'+(x.pro?' pro':'')+'"></div></div>';
+ }).join('')+'</div>'+inputBox();
+ var els=document.querySelectorAll('#msgs .bub');
+ cur.m.forEach(function(x,i){
+   if(x.t==='đang gõ...')els[i].innerHTML='<span class="dots"><i></i><i></i><i></i></span>';
+   else els[i].textContent=x.t;
+ });
+ v.scrollTop=v.scrollHeight;bind();
+}
+function bindEffortUI(wrapId,fillId,descId){
+ var wrap=$(wrapId);if(!wrap)return;var fill=$(fillId);
+ function paint(){
+  if(fill)fill.style.width=((effort-1)/4)*100+'%';
+  wrap.querySelectorAll('.effort-step').forEach(function(b){b.classList.toggle('on',+b.dataset.eff===effort)});
+  wrap.querySelectorAll('.effort-labels span').forEach(function(s,i){s.classList.toggle('on',i+1===effort)});
+  var d=$(descId);if(d){var ei=effortInfo(effort);d.innerHTML=ei.icon+' <b>'+ei.name+'</b> — '+ei.desc}
+ }
+ paint();
+ wrap.querySelectorAll('.effort-step').forEach(function(b){b.onclick=function(){setEffort(b.dataset.eff);paint();renderPlan();}});
+}
+
+/* ========== SEND ========== */
+function send(t){
+ t=(t||'').trim();if(!t)return;
+ if(!pro&&credits<=0){alert('Bạn đã hết 6 tin nhắn miễn phí. Nâng cấp Pro để tiếp tục!');openPlans();return}
+ if(!cur){cur={t:t.slice(0,26),m:[]};chats.unshift(cur)}
+ cur.m.push({r:'me',t:t});
+ if(!pro){credits=Math.max(0,credits-1);try{localStorage.setItem('fl_credits',credits)}catch(e){};credUI()}
+ var c=cur;
+ var slot={r:'bot',pro:pro,t:'đang gõ...',emoji:currentModel().emoji};
+ c.m.push(slot);render();
+ var sd=$('sd');if(sd)sd.disabled=true;
+ var delay=600+effort*220+Math.random()*700;
+ setTimeout(function(){
+  fg4Respond(t,c).then(function(x){slot.t=x||answer(t);if(cur===c&&mode==='chat')render();if(sd)sd.disabled=false}).catch(function(){slot.t=answer(t);if(cur===c&&mode==='chat')render();if(sd)sd.disabled=false});
+ },delay);
+}
+
+/* ========== SETTINGS ========== */
+function applyLook(){document.documentElement.setAttribute('data-theme',theme);document.documentElement.style.setProperty('--fs',fs+'px');document.body.setAttribute('data-effort',String(effort))}
+function closeSet(){$('mSet').classList.remove('on')}
+function tg(id,on){return '<button class="tog'+(on?' on':'')+'" id="'+id+'"></button>'}
+function sr(t,d,c){return '<div class="srow"><div><b>'+t+'</b><span>'+d+'</span></div>'+c+'</div>'}
+function openSet(t){if(t)tab=t;$('mSet').classList.add('on');drawSet()}
+function drawSet(){
+ var T=[['general','⚙️ Chung'],['look','🎨 Giao diện'],['effort','🚀 Mức nỗ lực'],['api','🔑 API / AI 4.0'],['plan','👑 Gói'],['data','🗑️ Dữ liệu']],h='',title='';
+ $('stabs').innerHTML=T.map(function(o){if(o[0]===tab)title=o[1];return '<button class="'+(o[0]===tab?'on':'')+'" data-t="'+o[0]+'">'+o[1]+'</button>'}).join('');
+ if(tab==='general')h=sr('Enter để gửi','Tắt thì Enter chỉ xuống dòng',tg('tEnter',enterSend))
+   +sr('Tin nhắn miễn phí',pro?'Không giới hạn':credits+' / '+freeLimit,'')
+   +sr('Tài khoản',authUser?(authUser.method==='guest'?'Guest (Free)':authUser.email):'Chưa đăng nhập','<button class="btn ghost" id="sLogout">Đăng xuất</button>');
+ if(tab==='look')h=sr('Chủ đề','Cực quang hoặc Băng giá','<select id="sTheme"><option value="dark"'+(theme==='dark'?' selected':'')+'>Cực quang</option><option value="ice"'+(theme==='ice'?' selected':'')+'>Băng giá</option></select>')+sr('Tuyết rơi','Hiệu ứng nền',tg('tSnow',snowOn))+sr('Cỡ chữ','Chữ trong khung chat','<select id="sFs">'+[[14,'Nhỏ'],[16,'Vừa'],[18,'Lớn']].map(function(o){return '<option value="'+o[0]+'"'+(fs===o[0]?' selected':'')+'>'+o[1]+'</option>'}).join('')+'</select>');
+ if(tab==='effort'){
+  var ei=effortInfo(effort);
+  h='<div style="font-size:13px;color:var(--mute);margin-bottom:8px">Chọn mức nỗ lực — ảnh hưởng độ chi tiết câu trả lời.</div>'+
+    '<div class="effort" id="effortWrap2"><div class="effort-track"><div class="effort-line"><div class="effort-fill" id="effortFill2"></div></div>'+
+    effortLevels.map(function(e){return '<button class="effort-step'+(e.v===effort?' on':'')+'" data-eff="'+e.v+'">'+e.v+'</button>'}).join('')+
+    '</div><div class="effort-labels">'+effortLevels.map(function(e){return '<span class="'+(e.v===effort?'on':'')+'">'+e.name+'</span>'}).join('')+'</div>'+
+    '<div class="effort-desc" id="effortDesc2">'+ei.icon+' <b>'+ei.name+'</b> — '+ei.desc+'</div></div>';
+ }
+ if(tab==='api'){
+  h='<div style="font-size:12.5px;color:var(--mute);margin-bottom:8px">API key đã được cấu hình sẵn trong code. Có thể đổi ở đây.</div>'+
+   '<label style="display:block;margin:8px 0 4px;font-weight:700">Chế độ</label>'+
+   '<select id="sAiMode" style="width:100%"><option value="auto"'+(fg4.mode==='auto'?' selected':'')+'>Tự động (API → Local → Fallback)</option><option value="local"'+(fg4.mode==='local'?' selected':'')+'>Chỉ AI Local</option></select>'+
+   '<label style="display:block;margin:12px 0 4px;font-weight:700">Endpoint</label>'+
+   '<input id="sApiEndpoint" type="url" value="'+String(fg4.endpoint||'').replace(/"/g,'&quot;')+'">'+
+   '<label style="display:block;margin:8px 0 4px;font-weight:700">Model</label>'+
+   '<input id="sApiModel" value="'+String(fg4.apiModel||'').replace(/"/g,'&quot;')+'">'+
+   '<label style="display:block;margin:8px 0 4px;font-weight:700">API key</label>'+
+   '<input id="sApiKey" type="password" value="'+String(fg4.apiKey||'').replace(/"/g,'&quot;')+'">'+
+   '<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">'+
+   '<button class="btn" id="sApiSave">💾 Lưu</button>'+
+   '<button class="btn ghost" id="sApiTest">🧪 Test</button></div>'+
+   '<div id="sApiResult" style="font-size:12.5px;margin-top:8px;color:var(--mute);word-break:break-word"></div>'+
+   '<hr style="border:0;border-top:1px solid var(--line);margin:14px 0">'+
+   '<b>🧠 AI Local (WebGPU)</b><p style="color:var(--mute);font-size:12px;margin:4px 0 8px">Tải Qwen về máy để chạy offline.</p>'+
+   '<button class="btn" id="sLoadLocal">'+(fg4.engineReady?'✓ Local sẵn sàng':'⬇️ Tải AI Local')+'</button>';
+ }
+ if(tab==='plan')h=sr('Gói hiện tại',pro?planInfo(plan).tag+' 👑':'Free (còn '+credits+' tin)',pro?'':'<button class="btn gold" id="sBuy">Nâng cấp</button>')+sr('Xem tất cả gói','Pro, Pro Max, Đại Gia, Triệu Phú, Tỷ Phú','<button class="btn ghost" id="sPlans">Chọn gói</button>');
+ if(tab==='data')h=sr('Xóa tất cả đoạn chat','Xóa lịch sử đã lưu','<button class="btn ghost" id="sClr">Xóa</button>');
+ $('spane').innerHTML='<button class="x" id="sx">✕</button><h3>'+title+'</h3>'+h;
+ document.querySelectorAll('#stabs button').forEach(function(b){b.onclick=function(){tab=b.getAttribute('data-t');drawSet()}});
+ $('sx').onclick=closeSet;
+ if($('tEnter'))$('tEnter').onclick=function(){enterSend=!enterSend;drawSet()};
+ if($('tSnow'))$('tSnow').onclick=function(){snowOn=!snowOn;drawSet()};
+ if($('sTheme'))$('sTheme').onchange=function(){theme=this.value;applyLook()};
+ if($('sFs'))$('sFs').onchange=function(){fs=+this.value;applyLook()};
+ if($('sLogout'))$('sLogout').onclick=function(){closeSet();logout()};
+ if($('sBuy'))$('sBuy').onclick=function(){closeSet();$('modal').classList.add('on')};
+ if($('sPlans'))$('sPlans').onclick=function(){closeSet();openPlans()};
+ if($('sClr'))$('sClr').onclick=function(){chats=[];cur=null;mode='chat';render();closeSet()};
+ if(tab==='effort')bindEffortUI('effortWrap2','effortFill2','effortDesc2');
+ if(tab==='api'){
+  if($('sAiMode'))$('sAiMode').onchange=function(){fg4.mode=this.value;fg4Save()};
+  if($('sApiSave'))$('sApiSave').onclick=function(){
+   fg4.endpoint=$('sApiEndpoint').value.trim();
+   fg4.apiModel=$('sApiModel').value.trim();
+   fg4.apiKey=$('sApiKey').value;
+   fg4Save();
+   $('sApiResult').style.color='var(--g1)';
+   $('sApiResult').textContent='✅ Đã lưu.';
+  };
+  if($('sApiTest'))$('sApiTest').onclick=async function(){
+   var btn=this,el=$('sApiResult');
+   btn.disabled=true;btn.textContent='Đang test...';el.textContent='';
+   try{
+    var ep=$('sApiEndpoint').value.trim(),md=$('sApiModel').value.trim(),key=$('sApiKey').value;
+    if(!ep||!md){el.style.color='#ff9aa7';el.textContent='❌ Cần URL và Model';return}
+    var r=await fetch(ep,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({model:md,messages:[{role:'user',content:'ping'}],max_tokens:5})});
+    if(!r.ok){var j={};try{j=await r.json()}catch(_){};el.style.color='#ff9aa7';el.textContent='❌ HTTP '+r.status+' — '+(j.error&&j.error.message||j.message||'Sai key/model')}
+    else{var d=await r.json();el.style.color='var(--g1)';el.textContent='✅ OK! Trả lời: '+(d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content||'(rỗng)')}
+   }catch(e){el.style.color='#ff9aa7';el.textContent='❌ Lỗi: '+(e.message||e)}
+   finally{btn.disabled=false;btn.textContent='🧪 Test'}
+  };
+  if($('sLoadLocal'))$('sLoadLocal').onclick=async function(){
+   var b=this;b.disabled=true;b.textContent='Đang tải...';
+   await fg4LoadLocal();b.disabled=false;b.textContent=fg4.engineReady?'✓ Local sẵn sàng':'Thử lại';
+  };
+ }
+}
+
+/* ========== CREDITS + PLANS ========== */
+function credUI(){var c=$('cred');if(c)c.textContent=pro?'⚡ Không giới hạn':'⚡ Còn '+credits+'/'+freeLimit+' tin'}
+function setPlan(p){
+ if(authUser&&authUser.method==='guest'&&p&&p!=='free'){
+   alert('Tài khoản Guest chỉ dùng được gói Free.\nĐăng xuất rồi đăng nhập bằng Email/iCloud để nâng cấp.');
+   return;
+ }
+ plan=p||'free';pro=(plan!=='free');
+ if(!planUnlocks(currentModel()))model='beta';
+ if(pro)credits=9999;else credits=freeLimit;
+ try{localStorage.setItem('fl_plan',plan);localStorage.setItem('fl_credits',credits);localStorage.setItem('fl_model',model)}catch(e){}
+ renderPlan();render();
+}
+function openPlans(){
+ var list=$('planList');if(!list)return;list.innerHTML='';
+ plans.forEach(function(p){
+  var active=p.id===plan;
+  var row=document.createElement('div');row.style.cssText='display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px';
+  var info=document.createElement('div');
+  var b=document.createElement('b');b.textContent=p.name+(active?' ✓':'');
+  var sp=document.createElement('span');sp.style.cssText='display:block;color:var(--mute);font-size:12.5px';sp.textContent=p.desc;
+  info.appendChild(b);info.appendChild(sp);
+  var right=document.createElement('div');right.style.cssText='display:flex;align-items:center;gap:10px';
+  var pr=document.createElement('span');pr.style.cssText='font-size:13px;color:var(--gold)';pr.textContent=p.price;
+  var btn=document.createElement('button');btn.className='btn '+p.cls;btn.textContent=active?'Đang dùng':'Chọn';btn.disabled=active;
+  btn.onclick=function(){
+   if(authUser&&authUser.method==='guest'&&p.id!=='free'){
+     alert('Tài khoản Guest không thể nâng cấp. Vui lòng đăng nhập bằng Email hoặc iCloud.');
+     return;
+   }
+   if(!confirm('Chọn '+p.name+' ('+p.price+')?\nDemo: xác nhận để kích hoạt (không thanh toán).'))return;
+   setPlan(p.id);$('plansModal').classList.remove('on');
+   alert('Đã kích hoạt '+p.name+'!');
+  };
+  right.appendChild(pr);right.appendChild(btn);
+  row.appendChild(info);right&&row.appendChild(right);
+  list.appendChild(row);
+ });
+ $('plansModal').classList.add('on');
+}
+
+/* ========== BOOT ========== */
+if(pro&&!planUnlocks(currentModel()))model='beta';
+setEffort(effort);applyLook();
+
+$('bNew').onclick=function(){cur=null;mode='chat';render();$('side').classList.remove('open')};
+$('bSearch').onclick=function(){var s=$('srch');s.style.display=s.style.display==='block'?'none':'block';if(s.style.display==='block')s.focus()};
+$('srch').oninput=hist;
+$('bProj').onclick=function(){cur=null;mode='proj';render();$('side').classList.remove('open')};
+$('bCust').onclick=function(){cur=null;mode='cust';render();$('side').classList.remove('open')};
+$('bUp').onclick=openPlans;
+$('bTop').onclick=openPlans;
+$('close').onclick=function(){$('modal').classList.remove('on')};
+$('buy').onclick=function(){$('modal').classList.remove('on')};
+$('buyMax').onclick=function(){$('modal').classList.remove('on');openPlans()};
+$('plansClose').onclick=$('plansDone').onclick=function(){$('plansModal').classList.remove('on')};
+$('plansModal').addEventListener('click',function(e){if(e.target===$('plansModal'))$('plansModal').classList.remove('on')});
+$('bMenu').onclick=function(){$('side').classList.toggle('open')};
+$('bMdl').onclick=function(e){e.stopPropagation();var o=$('menu').classList.toggle('on');$('bMdl').setAttribute('aria-expanded',o?'true':'false')};
+document.addEventListener('click',function(){$('menu').classList.remove('on')});
+$('bGear').onclick=$('bGear2').onclick=function(){openSet()};
+$('mSet').addEventListener('click',function(e){if(e.target===$('mSet'))closeSet()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeSet();$('modal').classList.remove('on');$('plansModal').classList.remove('on')}});
+
+/* ========== LOGIN BINDINGS ========== */
+$('lgEmail').onclick=function(){loginStep2('email')};
+$('lgICloud').onclick=function(){loginStep2('icloud')};
+$('lgGuest').onclick=function(){loginAs('guest')};
+$('lgBack').onclick=loginStep1;
+$('lgContinue').onclick=function(){
+  var v=$('loginInput').value.trim();
+  if(!v){$('loginErr').textContent='Vui lòng nhập email.';return}
+  if(!validateEmail(v)){$('loginErr').textContent=loginMethod==='icloud'?'Email iCloud phải kết thúc bằng @icloud.com, @me.com hoặc @mac.com.':'Email không hợp lệ.';return}
+  loginAs(loginMethod,v);
+};
+$('loginInput').addEventListener('keydown',function(e){if(e.key==='Enter')$('lgContinue').click()});
+
+/* ========== ENHANCEMENT TOOLBAR ========== */
+(function(){
+ var toastTimer=null;
+ function toast(msg){
+  var el=document.getElementById('fgToast');
+  if(!el){el=document.createElement('div');el.id='fgToast';el.className='fg-toast';document.body.appendChild(el)}
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(function(){el.classList.remove('show')},2400);
+ }
+ function makeBtn(id,label){
+  var b=document.createElement('button');b.type='button';b.id=id;b.className='fg-tool';b.textContent=label;return b;
+ }
+ function ensureToolbar(){
+  if(document.getElementById('fgToolbar'))return;
+  var bar=document.createElement('div');bar.id='fgToolbar';bar.className='fg-toolbar';
+  bar.appendChild(makeBtn('fgNew','＋ Chat mới'));
+  bar.appendChild(makeBtn('fgPrompts','✦ Prompt'));
+  bar.appendChild(makeBtn('fgAttach','📎 Tệp'));
+  bar.appendChild(makeBtn('fgVoice','🎙️ Voice'));
+  bar.appendChild(makeBtn('fgExport','↓ Sao lưu'));
+  var hidden=document.createElement('input');hidden.type='file';hidden.id='fgFile';hidden.accept='.json,.txt,.md,.csv,.log';hidden.hidden=true;bar.appendChild(hidden);
+  var view=document.getElementById('view');
+  view.parentNode.insertBefore(bar,view);
+  var modal=document.createElement('div');modal.id='fgPromptModal';modal.className='modal';
+  modal.innerHTML='<div class="dlg fg-prompt-dlg"><button class="x" id="fgPromptClose">✕</button><h3>Thư viện prompt ✦</h3><div id="fgPromptList" class="fg-prompt-list"></div></div>';
+  document.body.appendChild(modal);
+
+  document.getElementById('fgNew').onclick=function(){cur=null;mode='chat';render();toast('Đã tạo chat mới')};
+  document.getElementById('fgExport').onclick=function(){
+   try{
+    var data=JSON.stringify({chats:chats,ts:Date.now()},null,2);
+    var blob=new Blob([data],{type:'application/json'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='funnyguy-backup-'+Date.now()+'.json';a.click();
+    toast('Đã sao lưu');
+   }catch(e){toast('Lỗi xuất file')}
+  };
+  document.getElementById('fgAttach').onclick=function(){document.getElementById('fgFile').click()};
+  document.getElementById('fgFile').onchange=function(e){
+   var f=e.target.files[0];if(!f)return;
+   var rd=new FileReader();
+   rd.onload=function(){
+    var txt=String(rd.result||'').slice(0,8000);
+    var ta=document.getElementById('ta');
+    if(ta){ta.value='Nội dung tệp "'+f.name+'":\n\n'+txt;ta.focus()}
+    toast('Đã đọc tệp '+f.name);
+   };
+   rd.readAsText(f);e.target.value='';
+  };
+  var recBtn=document.getElementById('fgVoice');
+  recBtn.onclick=function(){
+   var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+   if(!SR){toast('Trình duyệt không hỗ trợ giọng nói');return}
+   var rec=new SR();rec.lang='vi-VN';rec.interimResults=false;
+   recBtn.classList.add('recording');recBtn.textContent='🎙️ Đang nghe...';
+   rec.onresult=function(e){var t=e.results[0][0].transcript;var ta=document.getElementById('ta');if(ta){ta.value=(ta.value?ta.value+' ':'')+t;ta.focus()}};
+   rec.onerror=function(){toast('Lỗi ghi âm')};
+   rec.onend=function(){recBtn.classList.remove('recording');recBtn.textContent='🎙️ Voice'};
+   try{rec.start()}catch(e){recBtn.classList.remove('recording');recBtn.textContent='🎙️ Voice'}
+  };
+  document.getElementById('fgPromptClose').onclick=function(){modal.classList.remove('on')};
+  modal.addEventListener('click',function(e){if(e.target===modal)modal.classList.remove('on')});
+  var prompts=[
+   ['🧠 Giải thích','Giải thích chủ đề sau thật dễ hiểu, có ví dụ: '],
+   ['💻 Viết code','Viết code hoàn chỉnh, có chú thích cho yêu cầu: '],
+   ['🔍 Phân tích','Phân tích sâu vấn đề sau, nêu ưu/nhược và đề xuất: '],
+   ['✍️ Viết lại','Viết lại nội dung sau cho rõ ràng, tự nhiên: '],
+   ['📚 Lộ trình','Tạo lộ trình học chi tiết cho chủ đề: '],
+   ['🌐 Dịch','Dịch nội dung sau tự nhiên, giữ sắc thái: '],
+   ['🧪 Phản biện','Đóng vai người phản biện, tìm điểm yếu của: '],
+   ['📝 Tóm tắt','Tóm tắt nội dung sau thành ý chính: ']
+  ];
+  document.getElementById('fgPrompts').onclick=function(){
+   var list=document.getElementById('fgPromptList');list.innerHTML='';
+   prompts.forEach(function(p){
+    var b=document.createElement('button');b.className='fg-prompt';
+    b.innerHTML='<b>'+p[0]+'</b><span>'+p[1]+'</span>';
+    b.onclick=function(){
+     modal.classList.remove('on');
+     var ta=document.getElementById('ta');
+     if(ta){ta.value=p[1];ta.focus()}
+    };
+    list.appendChild(b);
+   });
+   modal.classList.add('on');
+  };
+ }
+ ensureToolbar();
+})();
+
+/* init */
+if(authUser){applyAuth();$('loginModal').classList.remove('on')}
+else{showLogin()}
+renderPlan();
+render();
+})();
+</script>
+</body>
+</html>
